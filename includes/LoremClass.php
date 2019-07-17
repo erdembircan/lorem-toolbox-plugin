@@ -13,9 +13,19 @@ class LoremClass
      */
     private $_defaults = array(
       'prefix'=> 'eb_lorem_',
-      'lorem_raw'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis molestias ipsa modi nihil? Ad mollitia vero rem fugit culpa dolorem, sint ipsa impedit natus provident dolores molestiae itaque dignissimos totam.',
       'page_title'=> 'Lorem Plugin Settings',
-      'shortcode_default_length'=>5);
+      /**
+       * default options
+       */
+      'internal'=> array(
+        'lorem_raw'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis molestias ipsa modi nihil? Ad mollitia vero rem fugit culpa dolorem, sint ipsa impedit natus provident dolores molestiae itaque dignissimos totam.',
+        'shortcode_default_paragraph_length'=>3,
+        'shortcode_default_min_word_length'=> 50,
+        'shortcode_default_max_word_length'=> 100,
+        'shortcode_default_min_sentence'=> 5,
+        'shortcode_default_max_sentence'=> 10,
+        )
+      );
     
     /**
      * array containing various class specifics options
@@ -31,7 +41,7 @@ class LoremClass
      */
     public function __construct($supplied_args = array())
     {
-        $this->args = \wp_parse_args($supplied_args, $this->_defaults);
+        $this->args = \array_replace_recursive($this->_defaults, $supplied_args);
 
         $this->_setUp();
 
@@ -40,7 +50,68 @@ class LoremClass
 
         \add_action('admin_init', array($this, 'admin_init'));
         \add_action('admin_menu', array($this, 'admin_menu'));
+
+        \add_action('init', array($this, 'register_shortcode'));
     }
+
+    /**
+     * WordPress shortcode hook callback
+     *
+     * @return void
+     */
+    public function register_shortcode()
+    {
+        \add_shortcode('lorem', array($this, 'shortcode_logic'));
+    }
+
+    /**
+     * shortcode working logic
+     *
+     * @param mixed $atts user requested shortcode attributes
+     * @return mixed generated content
+     */
+    public function shortcode_logic($atts)
+    {
+        $default_atts = array(
+        'p'=> $this->_get_options('shortcode_default_paragraph_length')
+      );
+        $parsed_atts = \shortcode_atts($default_atts, $atts);
+        
+        $content = $this->_generate_lorem(absint($parsed_atts["p"]), 50, 100, 5, 10);
+
+        return $content;
+    }
+
+    private function _generate_lorem($p=1, $minW=50, $maxW=100, $minSL=5, $maxSL=9)
+    {
+        $lorem = $this->_get_options('lorem_raw');
+        $words = array_map('\strtolower', \preg_split('/\W/', $lorem));
+
+        $generated = '';
+        for ($i=0; $i < $p; $i++) {
+            $wordCount = rand($minW, $maxW);
+            $paragraph= '';
+
+            for ($x=0; $x <$wordCount ; $x++) {
+                $remainingWords = $wordCount -$x;
+                $rW = rand($minSL, $maxSL);
+                $minSentenceLength = $rW >= $remainingWords? $remainingWords: $rW;
+
+                $sentence= '';
+                for ($y=0; $y < $minSentenceLength; $y++) {
+                    $sentence .= $words[rand(0, sizeof($words)-1)]. ' ';
+                }
+                $sentence = \ucfirst(\trim($sentence) . '. ');
+                $paragraph .= $sentence;
+
+                $x += $minSentenceLength-1;
+            }
+            $generated .= "<p>$paragraph</p>";
+        }
+
+        return $generated;
+    }
+
 
     /**
      * WordPress admin init hook callback
@@ -167,9 +238,7 @@ class LoremClass
         $options_key = $this->_getArg('options_key');
         $options = $this->_get_options();
 
-        $options['internal'] = array(
-          'lorem_raw' => $this->_getArg('lorem_raw'),
-          'shortcode_default_length'=>$this->_getArg('shortcode_default_length'));
+        $options['internal'] = $this->_getArg('internal');
         \update_option($options_key, $options);
     }
 }

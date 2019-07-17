@@ -12,6 +12,6 @@ $dir_path = \plugin_dir_path(__FILE__);
 require $dir_path . 'includes/LoremClass.php';
 
 $lorem_raw = file_get_contents($dir_path . 'assets/plain/lorem-source.txt');
-$args = array('file'=>__FILE__, 'lorem_raw'=>$lorem_raw);
+$args = array('file'=>__FILE__, 'internal'=>array('lorem_raw'=>$lorem_raw));
 
 $oopConstructed = new construct\LoremClass($args);

@@ -6,7 +6,7 @@
   settings_fields($this->_getArg('options_key'));
   ?>
     <table class='form-table'>
-      <h3>Shortcode Settings</h3>
+      <h2>Shortcode Settings</h2>
       <tr>
         <th scope='row'>Use default lorem</th>
         <td>
@@ -17,11 +17,45 @@
         </td>
       </tr>
       <tr>
-        <th scope='row'>Default number of sentences</th>
+        <th scope='row'>Default number of paragraphs</th>
         <td>
           <input type='number' min='1' max='100'
-            name='<?php echo $options_key . '[shortcode_default_length]'; ?>'
-            value='<?php echo $this->_get_options('shortcode_default_length');?>'>
+            name='<?php echo $options_key . '[shortcode_default_paragraph_length]'; ?>'
+            value='<?php echo $this->_get_options('shortcode_default_paragraph_length');?>'>
+        </td>
+      </tr>
+      <tr>
+        <th scope='row'>Default word lengths (in character)</th>
+        <td>
+          <div>
+            <label>Min: </label>
+            <input type='number' min='1' max='100'
+              name='<?php echo $options_key . '[shortcode_default_min_word_length]'; ?>'
+              value='<?php echo $this->_get_options('shortcode_default_min_word_length');?>'>
+          </div>
+          <div>
+            <label>Max: </label>
+            <input type='number' min='1' max='100'
+              name='<?php echo $options_key . '[shortcode_default_max_word_length]'; ?>'
+              value='<?php echo $this->_get_options('shortcode_default_max_word_length');?>'>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th scope='row'>Default sentence lengths (in words)</th>
+        <td>
+          <div>
+            <label>Min: </label>
+            <input type='number' min='1' max='100'
+              name='<?php echo $options_key . '[shortcode_default_min_sentence]'; ?>'
+              value='<?php echo $this->_get_options('shortcode_default_min_sentence');?>'>
+          </div>
+          <div>
+            <label>Max: </label>
+            <input type='number' min='1' max='100'
+              name='<?php echo $options_key . '[shortcode_default_max_sentence]'; ?>'
+              value='<?php echo $this->_get_options('shortcode_default_max_sentence');?>'>
+          </div>
         </td>
       </tr>
     </table> <?php submit_button('Save Changes'); ?>
