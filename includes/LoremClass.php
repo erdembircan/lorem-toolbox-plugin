@@ -1,11 +1,15 @@
 <?php
 namespace erdembircan\lorem_plugin\construct;
 
+require 'hooks.php';
+
 /**
  * OOP Class for plugin
  */
 class LoremClass
 {
+    use \erdembircan\lorem_plugin\traits\ActionHooks;
+  
     /**
      * predefined defaults array
      *
@@ -18,13 +22,24 @@ class LoremClass
        * default options
        */
       'internal'=> array(
+        'use_custom'=>'off',
         'lorem_raw'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis molestias ipsa modi nihil? Ad mollitia vero rem fugit culpa dolorem, sint ipsa impedit natus provident dolores molestiae itaque dignissimos totam.',
         'shortcode_default_paragraph_length'=>3,
-        'shortcode_default_min_word_length'=> 50,
-        'shortcode_default_max_word_length'=> 100,
+        'shortcode_default_min_paragraph_length'=> 50,
+        'shortcode_default_max_paragraph_length'=> 100,
         'shortcode_default_min_sentence'=> 5,
         'shortcode_default_max_sentence'=> 10,
         )
+      );
+
+    private $_sanitization_options = array(
+        'use_custom'=>'\sanitize_text_field',
+        'lorem_raw'=>'\sanitize_textarea_field',
+        'shortcode_default_paragraph_length'=>'\absint',
+        'shortcode_default_min_paragraph_length'=> '\absint',
+        'shortcode_default_max_paragraph_length'=> '\absint',
+        'shortcode_default_min_sentence'=> '\absint',
+        'shortcode_default_max_sentence'=>'\absint'
       );
     
     /**
@@ -55,16 +70,6 @@ class LoremClass
     }
 
     /**
-     * WordPress shortcode hook callback
-     *
-     * @return void
-     */
-    public function register_shortcode()
-    {
-        \add_shortcode('lorem', array($this, 'shortcode_logic'));
-    }
-
-    /**
      * shortcode working logic
      *
      * @param mixed $atts user requested shortcode attributes
@@ -73,28 +78,45 @@ class LoremClass
     public function shortcode_logic($atts)
     {
         $default_atts = array(
-        'p'=> $this->_get_options('shortcode_default_paragraph_length')
+        'p'=> $this->_get_options('shortcode_default_paragraph_length'),
+        'pMin'=> $this->_get_options('shortcode_default_min_paragraph_length'),
+        'pMax'=> $this->_get_options('shortcode_default_max_paragraph_length'),
+        'sMin'=> $this->_get_options('shortcode_default_min_sentence'),
+        'sMax'=> $this->_get_options('shortcode_default_max_sentence'),
       );
         $parsed_atts = \shortcode_atts($default_atts, $atts);
+        \extract($parsed_atts);
         
-        $content = $this->_generate_lorem(absint($parsed_atts["p"]), 50, 100, 5, 10);
+        $content = $this->_generate_lorem($p, $pMin, $pMax, $sMin, $sMax);
 
         return $content;
     }
 
-    private function _generate_lorem($p=1, $minW=50, $maxW=100, $minSL=5, $maxSL=9)
+    /**
+     * function responsible for generating random sentences based on plugin settings and supplied arguments
+     *
+     * @param integer $p number of paragraphs
+     * @param integer $pMin min paragraph length in words
+     * @param integer $pMax max paragraph length in words
+     * @param integer $sMin min sentence length in words
+     * @param integer $sMax max sentence length in words
+     * @return string generated paragraphs
+     */
+    private function _generate_lorem($p=1, $pMin=50, $pMax=100, $sMin=5, $sMax=9)
     {
-        $lorem = $this->_get_options('lorem_raw');
+        $use_custom = $this->_get_options('use_custom');
+        $lorem = $use_custom=='off'?($this->_get_options('internal'))['lorem_raw']:$this->_get_options('lorem_raw');
         $words = array_map('\strtolower', \preg_split('/\W/', $lorem));
 
         $generated = '';
+        $generated .= "<pre>p=$p, pMin=$pMin, pMax=$pMax, sMin=$sMin, sMax=$sMax</pre>";
         for ($i=0; $i < $p; $i++) {
-            $wordCount = rand($minW, $maxW);
+            $wordCount = rand($pMin, $pMax);
             $paragraph= '';
 
             for ($x=0; $x <$wordCount ; $x++) {
                 $remainingWords = $wordCount -$x;
-                $rW = rand($minSL, $maxSL);
+                $rW = rand($sMin, $sMax);
                 $minSentenceLength = $rW >= $remainingWords? $remainingWords: $rW;
 
                 $sentence= '';
@@ -112,22 +134,10 @@ class LoremClass
         return $generated;
     }
 
-
-    /**
-     * WordPress admin init hook callback
-     *
-     * @return void
-     */
-    public function admin_init()
-    {
-        $options_key = $this->_getArg('options_key');
-        \register_setting($options_key, $options_key, array($this, 'sanitize_form'));
-    }
-
     /**
      * sanitization function for settings page
      *
-     * will be using this callback to make sure internal options will persist
+     * will also be responsible to make sure internal options will persist
      *
      * @param array $input current option sent to options.php
      * @return array sanitized options
@@ -135,9 +145,34 @@ class LoremClass
     public function sanitize_form($input=array())
     {
         $options = $this->_get_options();
+        $input = $this->_sanitize_array($input);
+
+        // persist internal options
         $options = wp_parse_args($input, array('internal'=>$options['internal']));
 
         return $options;
+    }
+
+    /**
+     * input array sanitization
+     *
+     * will sanitize array fields based on the method provided on options
+     * also will make sure no keys not defined in sanitization options merged into options database
+     *
+     * @param array $arr array to be sanitized
+     * @return array sanitized array
+     */
+    private function _sanitize_array($arr)
+    {
+        $opt = $this->_sanitization_options;
+        $tempArr = array();
+        foreach ($opt as $key=>$method) {
+            if (isset($arr[$key])) {
+                $tempArr[$key]=\call_user_func($method, $arr[$key]);
+            }
+        }
+
+        return $tempArr;
     }
 
     /**
@@ -160,16 +195,6 @@ class LoremClass
     }
 
     /**
-     * WordPress admin menu hook callback
-     *
-     * @return void
-     */
-    public function admin_menu()
-    {
-        ($this->args)['page_hook_suffix'] =  \add_options_page($this->_getArg('page_title'), $this->_getArg('page_title'), 'manage_options', $this->_getArg('prefix') . 'slug', array($this, 'options_page'));
-    }
-
-    /**
      * settings page visual display callback
      *
      * @return void
@@ -186,25 +211,6 @@ class LoremClass
         require_once $settings_display_page;
         ob_end_flush();
         // output buffer end
-    }
-
-    /**
-     * WordPress deactivation hook callback
-     *
-     * @return void
-     */
-    public function deactivation_hook()
-    {
-        // TODO uncomment for production
-        // $options = \get_option($this->_getArg('options_key'));
-        // unset($options['lorem_raw']);
-        // \update_option($this->_getArg('options_key'), $options);
-
-        // normally the solution above is the preferred one for production
-        // but for development purposes, in order to easily delete options, will use the below approach
-
-        // TODO comment for production
-        \delete_option($this->_getArg('options_key'));
     }
 
     /**
@@ -226,19 +232,5 @@ class LoremClass
     private function _getArg($key)
     {
         return ($this->args)[$key];
-    }
-
-    /**
-     * WordPress activation hook callback
-     *
-     * @return void
-     */
-    public function activation_hook()
-    {
-        $options_key = $this->_getArg('options_key');
-        $options = $this->_get_options();
-
-        $options['internal'] = $this->_getArg('internal');
-        \update_option($options_key, $options);
     }
 }

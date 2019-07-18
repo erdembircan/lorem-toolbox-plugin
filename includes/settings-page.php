@@ -1,5 +1,6 @@
 <div class='wrap'>
   <h2><?php echo $this->_getArg('page_title'); ?>
+    <hr>
   </h2>
   <form action='options.php' method='post'>
     <?php
@@ -7,12 +8,13 @@
   ?>
     <table class='form-table'>
       <h2>Shortcode Settings</h2>
+      <hr>
       <tr>
-        <th scope='row'>Use default lorem</th>
+        <th scope='row'>Use custom phrases</th>
         <td>
           <input type='checkbox'
-            name='<?php echo $options_key . '[use_default]'; ?>'
-            <?php checked($options['use_default'], 'on'); ?>
+            name='<?php echo $options_key . '[use_custom]'; ?>'
+            <?php checked($options['use_custom'], 'on'); ?>
           >
         </td>
       </tr>
@@ -25,19 +27,19 @@
         </td>
       </tr>
       <tr>
-        <th scope='row'>Default word lengths (in character)</th>
+        <th scope='row'>Default paragraph lengths (in words)</th>
         <td>
           <div>
             <label>Min: </label>
             <input type='number' min='1' max='100'
-              name='<?php echo $options_key . '[shortcode_default_min_word_length]'; ?>'
-              value='<?php echo $this->_get_options('shortcode_default_min_word_length');?>'>
+              name='<?php echo $options_key . '[shortcode_default_min_paragraph_length]'; ?>'
+              value='<?php echo $this->_get_options('shortcode_default_min_paragraph_length');?>'>
           </div>
           <div>
             <label>Max: </label>
             <input type='number' min='1' max='100'
-              name='<?php echo $options_key . '[shortcode_default_max_word_length]'; ?>'
-              value='<?php echo $this->_get_options('shortcode_default_max_word_length');?>'>
+              name='<?php echo $options_key . '[shortcode_default_max_paragraph_length]'; ?>'
+              value='<?php echo $this->_get_options('shortcode_default_max_paragraph_length');?>'>
           </div>
         </td>
       </tr>
@@ -58,8 +60,22 @@
           </div>
         </td>
       </tr>
+      <tr>
+        <td colspan='2'>
+          <hr>
+        </td>
+      </tr>
+      <tr>
+        <th scope='row'>Custom phrases</th>
+        <td>
+          <textarea rows='5' cols='100%'
+            name='<?php echo $options_key . '[lorem_raw]'; ?>'><?php echo $this->_get_options('lorem_raw');?>
+            </textarea>
+        </td>
+      </tr>
     </table> <?php submit_button('Save Changes'); ?>
   </form>
   <pre style='background:white; white-space: pre-wrap; color:grey; padding: 10px'>
   <?php print_r($options); ?>
+  </pre>
 </div>
