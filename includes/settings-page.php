@@ -75,7 +75,4 @@
       </tr>
     </table> <?php submit_button('Save Changes'); ?>
   </form>
-  <pre style='background:white; white-space: pre-wrap; color:grey; padding: 10px'>
-  <?php print_r($options); ?>
-  </pre>
 </div>
