@@ -17,7 +17,7 @@ class LoremClass
      */
     private $_defaults = array(
       'prefix'=> 'eb_lorem_',
-      'page_title'=> 'Lorem Plugin Settings',
+      'page_title'=> 'lorem plugin settings',
       /**
        * default options
        */
@@ -67,6 +67,8 @@ class LoremClass
         \add_action('admin_menu', array($this, 'admin_menu'));
 
         \add_action('init', array($this, 'register_shortcode'));
+
+        \add_action('admin_enqueue_scripts', array($this, 'admin_scripts'));
     }
 
     /**

@@ -3,9 +3,7 @@
     <hr>
   </h2>
   <form action='options.php' method='post'>
-    <?php
-  settings_fields($this->_getArg('options_key'));
-  ?>
+    <?php settings_fields($this->_getArg('options_key')); ?>
     <table class='form-table'>
       <h2>Shortcode Settings</h2>
       <hr>
@@ -75,4 +73,25 @@
       </tr>
     </table> <?php submit_button('Save Changes'); ?>
   </form>
+
+  <div id='lorem_app' class='wrap'>
+    <h2>{{page_title | capAF}}</h2>
+    <form action='options.php' method='post'>
+      <?php settings_fields($this->_getArg('options_key')); ?>
+      <h2>Shortcode Settings</h2>
+      <settings-table :settings='inputs'></settings-table>
+    </form>
+  </div>
 </div>
+
+<!-- settings-table template -->
+<script type='x-template' id='loremSettingsTable'>
+  <table class='form-table'>
+    <tr v-for='s in settings'>
+      <th scope='row'>{{s.title | capF}}</th>
+      <td>
+        <setting-row :element='s.element' :domProps='s.domProps'></setting-row>
+      </td>
+    </tr>
+  </table>
+</script>

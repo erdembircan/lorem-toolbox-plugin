@@ -13,8 +13,8 @@
     - [ ] use more tag
     - [ ] for now use default generation options
   - [ ] experiment with a frontend library for settings
-    - [ ] use react
-    - [ ] use vue
+    - ~~[ ] use react~~
+    - [x] use vue
   - [x] sanitization
 - [x] shortcode implementation
   - [x] lorem generation algorithm

@@ -73,4 +73,26 @@ trait ActionHooks
     {
         \add_shortcode('lorem', array($this, 'shortcode_logic'));
     }
+
+    public function admin_scripts($hook)
+    {
+        if ($hook == $this->_getArg('page_hook_suffix')) {
+            \wp_register_script('vuejs', "https://cdn.jsdelivr.net/npm/vue");
+
+            \wp_enqueue_script('lorem-settings', plugin_dir_url($this->_getArg('file')). 'assets/js/lorem-settings.js', array('vuejs'), false, true);
+
+            $options_key = $this->_getArg('options_key');
+            $settings = array(
+              data => array(
+              page_title => $this->_getArg('page_title'),
+              inputs => array(
+                  ['name' => $options_key . '[use_custom]' ,  'element'=>'input', 'title' => 'use custom phrases' , 'domProps'=> ['type'=>'checkbox', 'checked'=> $options['use_custom']]],
+                  ['name' => $options_key . '[shortcode_default_paragraph_length]' ,  'element'=>'input', 'title' => 'default number of paragraphs' , 'domProps'=> ['type'=>'number', 'min'=>'1', 'max'=>'100', 'value'=> $this->_get_options('shortcode_default_paragraph_length')]],
+                  ['name' => $options_key . '[lorem_raw]' ,  'element'=>'textarea', 'title' => 'custom phrases' , 'domProps'=> ['rows'=>'5', 'cols'=>'100', 'innerHTML'=> $this->_get_options('lorem_raw')]],
+                )
+              )
+            );
+            wp_localize_script('lorem-settings', 'loremSettings', $settings);
+        }
+    }
 }
