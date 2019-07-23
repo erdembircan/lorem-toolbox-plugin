@@ -3,7 +3,7 @@
 ## 📋 todo-list
 
 - [x] settings page
-  - [ ] shortcode settings
+  - [x] shortcode settings
     - ~~default sentence amount~~
     - [x] min/max sentence length
     - [x] min/max paragraph word length
