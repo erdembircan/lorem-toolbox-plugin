@@ -69,6 +69,8 @@ class LoremClass
         \add_action('init', array($this, 'register_shortcode'));
 
         \add_action('admin_enqueue_scripts', array($this, 'admin_scripts'));
+
+        \add_action('wp_ajax_eb_lorem_generate_posts', array($this, 'eb_lorem_generate_posts'));
     }
 
     /**

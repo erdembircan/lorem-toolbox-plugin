@@ -35,8 +35,23 @@ Vue.component('settings-table', {
   props: ['settings'],
 });
 
+Vue.component('generate-posts', {
+  template: '#generatePosts',
+  props: ['ajaxurl', 'ajaxaction'],
+  data() {
+    return {
+      postCount: 5,
+    };
+  },
+  methods: {
+    handleForm() {
+      console.log('handled');
+    },
+  },
+});
+
 // main Vue instance
 new Vue({
   data: loremSettings.data,
-  components: ['settings-table'],
+  components: ['settings-table', 'generate-posts'],
 }).$mount('#lorem_app');

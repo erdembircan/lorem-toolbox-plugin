@@ -82,9 +82,15 @@ trait ActionHooks
             \wp_enqueue_script('lorem-settings', plugin_dir_url($this->_getArg('file')). 'assets/js/lorem-settings.js', array('vuejs'), false, true);
 
             $options_key = $this->_getArg('options_key');
+
+            $protocol = isset($_SERVER['https'])? 'https':'http';
+            $ajax_url = \admin_url('admin-ajax.php', $protocol);
+
             $settings = array(
               data => array(
                 page_title => $this->_getArg('page_title'),
+                ajax_url=>$ajax_url,
+                ajax_action =>'eb_lorem_generate_posts',
                 inputs => array(
                     [   'title' => 'use custom phrases' ,'elements'=>[['element'=>'input', 'domProps'=> ['name' => $options_key . '[use_custom]' ,'type'=>'checkbox', 'checked'=> $this->_get_options('use_custom') == 'on' ? 'checked':'']]]],
                     ['title' => 'default number of paragraphs', 'elements'=>[['element'=>'input', 'domProps'=> [ 'name' => $options_key . '[shortcode_default_paragraph_length]' ,'type'=>'number', 'value'=> $this->_get_options('shortcode_default_paragraph_length'),'min'=>1, 'max'=>100]]]],
@@ -108,5 +114,12 @@ trait ActionHooks
             );
             wp_localize_script('lorem-settings', 'loremSettings', $settings);
         }
+    }
+
+    public function eb_lorem_generate_posts()
+    {
+        $post_count = $_POST['post_count'];
+        \wp_insert_post(['post_title' =>'post count: ' . $post_count, 'post_status'=>'publish']);
+        die();
     }
 }
