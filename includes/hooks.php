@@ -91,6 +91,7 @@ trait ActionHooks
                 page_title => $this->_getArg('page_title'),
                 ajax_url=>$ajax_url,
                 ajax_action =>'eb_lorem_generate_posts',
+                nonce => wp_create_nonce('eb_lorem_generate_posts'),
                 inputs => array(
                     [   'title' => 'use custom phrases' ,'elements'=>[['element'=>'input', 'domProps'=> ['name' => $options_key . '[use_custom]' ,'type'=>'checkbox', 'checked'=> $this->_get_options('use_custom') == 'on' ? 'checked':'']]]],
                     ['title' => 'default number of paragraphs', 'elements'=>[['element'=>'input', 'domProps'=> [ 'name' => $options_key . '[shortcode_default_paragraph_length]' ,'type'=>'number', 'value'=> $this->_get_options('shortcode_default_paragraph_length'),'min'=>1, 'max'=>100]]]],
@@ -116,10 +117,21 @@ trait ActionHooks
         }
     }
 
+    /**
+     * ajax endpoint for generating posts based on the requested count
+     *
+     * @return string response data
+     */
     public function eb_lorem_generate_posts()
     {
-        $post_count = $_POST['post_count'];
-        \wp_insert_post(['post_title' =>'post count: ' . $post_count, 'post_status'=>'publish']);
+        if (isset($_POST['post_count'])&&current_user_can('manage_options') && \check_ajax_referer('eb_lorem_generate_posts', 'nonce', false)&& \wp_insert_post(['post_title' =>'post count: ' . $_POST['post_count'], 'post_status'=>'publish'])) {
+            $resp = ['status'=>200, 'message'=>'OK'];
+            echo \json_encode($resp);
+        } else {
+            $resp = ['status'=>404, 'message'=>'unauthorized'];
+            echo \json_encode($resp);
+        }
+
         die();
     }
 }

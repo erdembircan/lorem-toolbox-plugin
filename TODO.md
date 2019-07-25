@@ -8,15 +8,16 @@
     - [x] min/max sentence length
     - [x] min/max paragraph word length
     - [x] use custom sentences
-  - [ ] auto-generate options
-    - [ ] number of posts
-    - [ ] use more tag
-    - [ ] for now use default generation options
-  - [ ] experiment with a frontend library for settings
+  - ~~auto-generate options~~
+    - ~~number of posts~~
+    - ~~use more tag~~
+    - ~~now use default generation options~~
+  - [x] experiment with a frontend library for settings
     - ~~[ ] use react~~
     - [x] use vue
   - [x] sanitization
 - [x] shortcode implementation
   - [x] lorem generation algorithm
-- [ ] auto generate number of posts
+- [x] auto generate number of posts
 - [ ] localization
+- [ ] readme

@@ -37,15 +37,30 @@ Vue.component('settings-table', {
 
 Vue.component('generate-posts', {
   template: '#generatePosts',
-  props: ['ajaxurl', 'ajaxaction'],
+  props: ['ajaxurl', 'ajaxaction', 'nonce'],
   data() {
     return {
       postCount: 5,
     };
   },
   methods: {
+    changeSubmitButtonStatus(status) {
+      this.$refs.submitButton.disabled = status;
+    },
     handleForm() {
-      console.log('handled');
+      this.changeSubmitButtonStatus(true);
+      return fetch(this.ajaxurl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `nonce=${this.nonce}&post_count=${this.postCount}&action=${this.ajaxaction}`,
+      })
+        .then(resp => {
+          this.changeSubmitButtonStatus(false);
+          return resp.json();
+        })
+        .then(j => console.log(j));
     },
   },
 });

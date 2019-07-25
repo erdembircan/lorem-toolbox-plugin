@@ -1,9 +1,11 @@
 <div id='lorem_app' class='wrap'>
   <h2>{{page_title | capAF}}</h2>
   <settings-table :settings='inputs'></settings-table>
+  <br />
   <hr>
+  <br />
   <h2>Generate Posts</h2>
-  <generate-posts :ajaxurl='ajax_url' :ajaxaction='ajax_action'></generate-posts>
+  <generate-posts :ajaxurl='ajax_url' :ajaxaction='ajax_action' :nonce='nonce'></generate-posts>
 </div>
 
 <!-- settings-table template -->
@@ -25,17 +27,19 @@
   </form>
 </script>
 
+<!-- generate-posts template -->
 <script type="x-template" id="generatePosts">
   <form :action='ajaxurl' method='post' @submit.prevent='handleForm'>
     <table class='form-table'>
     <input type='hidden' name='action' :value='ajaxaction'>
+    <input type='hidden' name='nonce' :value='nonce'>
       <tr>
         <th scope='row'>Number of posts</th>
         <td>
-          <input type='number' min='1' max='100' :value='postCount' name='post_count'>
+          <input type='number' min='1' max='100' v-model:value='postCount' name='post_count'>
         </td>
       </tr>
     </table>
-    <input type='submit' value='Generate Posts' class='button button-secondary'>
+    <input ref='submitButton' type='submit' value='Generate Posts' class='button button-secondary'>
   </form>
 </script>
