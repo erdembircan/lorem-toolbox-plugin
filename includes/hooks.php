@@ -84,13 +84,27 @@ trait ActionHooks
             $options_key = $this->_getArg('options_key');
             $settings = array(
               data => array(
-              page_title => $this->_getArg('page_title'),
-              inputs => array(
-                  ['name' => $options_key . '[use_custom]' ,  'element'=>'input', 'title' => 'use custom phrases' , 'domProps'=> ['type'=>'checkbox', 'checked'=> $options['use_custom']]],
-                  ['name' => $options_key . '[shortcode_default_paragraph_length]' ,  'element'=>'input', 'title' => 'default number of paragraphs' , 'domProps'=> ['type'=>'number', 'min'=>'1', 'max'=>'100', 'value'=> $this->_get_options('shortcode_default_paragraph_length')]],
-                  ['name' => $options_key . '[lorem_raw]' ,  'element'=>'textarea', 'title' => 'custom phrases' , 'domProps'=> ['rows'=>'5', 'cols'=>'100', 'innerHTML'=> $this->_get_options('lorem_raw')]],
+                page_title => $this->_getArg('page_title'),
+                inputs => array(
+                    [   'title' => 'use custom phrases' ,'elements'=>[['element'=>'input', 'domProps'=> ['name' => $options_key . '[use_custom]' ,'type'=>'checkbox', 'checked'=> $this->_get_options('use_custom') == 'on' ? 'checked':'']]]],
+                    ['title' => 'default number of paragraphs', 'elements'=>[['element'=>'input', 'domProps'=> [ 'name' => $options_key . '[shortcode_default_paragraph_length]' ,'type'=>'number', 'value'=> $this->_get_options('shortcode_default_paragraph_length'),'min'=>1, 'max'=>100]]]],
+                    [   'title' => 'default paragraph length (in words)' ,'elements'=>[
+                      ['element'=>'span', 'domProps'=>['innerHTML'=>'Min:']],
+                      ['element'=>'input', 'domProps'=> ['name' => $options_key . '[shortcode_default_min_paragraph_length]' ,'type'=>'number', 'value'=> $this->_get_options('shortcode_default_min_paragraph_length'),'min'=>1, 'max'=>100]],
+                      ['element'=>'span', 'domProps'=>['innerHTML'=>'Max:']],
+                      ['element'=>'input', 'domProps'=> ['name' => $options_key . '[shortcode_default_max_paragraph_length]' ,'type'=>'number', 'value'=> $this->_get_options('shortcode_default_max_paragraph_length'),'min'=>1, 'max'=>100]]
+                      ]],
+                    [   'title' => 'default sentence length (in words)' ,'elements'=>[
+                      ['element'=>'span', 'domProps'=>['innerHTML'=>'Min:']],
+                      ['element'=>'input', 'domProps'=> ['name' => $options_key . '[shortcode_default_min_sentence]' ,'type'=>'number', 'value'=> $this->_get_options('shortcode_default_min_sentence'),'min'=>1, 'max'=>100]],
+                      ['element'=>'span', 'domProps'=>['innerHTML'=>'Max:']],
+                      ['element'=>'input', 'domProps'=> ['name' => $options_key . '[shortcode_default_max_sentence]' ,'type'=>'number', 'value'=> $this->_get_options('shortcode_default_max_sentence'),'min'=>1, 'max'=>100]]
+                      ]],
+                    [   'title' => 'custom phrases' ,'elements'=>[
+                      ['element'=>'textarea', 'domProps'=> ['name' => $options_key . '[lorem_raw]' ,'innerHTML'=> $this->_get_options('lorem_raw'), 'rows'=>5, 'cols'=>'100']],
+                      ]],
+                    )
                 )
-              )
             );
             wp_localize_script('lorem-settings', 'loremSettings', $settings);
         }
