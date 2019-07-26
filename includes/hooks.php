@@ -87,12 +87,14 @@ trait ActionHooks
             $ajax_url = \admin_url('admin-ajax.php', $protocol);
 
             $settings = array(
-              data => array(
-                page_title => $this->_getArg('page_title'),
-                ajax_url=>$ajax_url,
-                ajax_action =>'eb_lorem_generate_posts',
-                nonce => wp_create_nonce('eb_lorem_generate_posts'),
-                inputs => array(
+              'data' => array(
+                'post_count' => $this-> count_generated_posts(),
+                'page_title' => $this->_getArg('page_title'),
+                'ajax_url'=>$ajax_url,
+                'ajax_action_generate' =>'eb_lorem_generate_posts',
+                'ajax_action_delete' =>'eb_lorem_delete_posts',
+                'nonce' => wp_create_nonce('eb_lorem_generate_posts'),
+                'inputs' => array(
                     [   'title' => 'use custom phrases' ,'elements'=>[['element'=>'input', 'domProps'=> ['name' => $options_key . '[use_custom]' ,'type'=>'checkbox', 'checked'=> $this->_get_options('use_custom') == 'on' ? 'checked':'']]]],
                     ['title' => 'default number of paragraphs', 'elements'=>[['element'=>'input', 'domProps'=> [ 'name' => $options_key . '[shortcode_default_paragraph_length]' ,'type'=>'number', 'value'=> $this->_get_options('shortcode_default_paragraph_length'),'min'=>1, 'max'=>100]]]],
                     [   'title' => 'default paragraph length (in words)' ,'elements'=>[
@@ -124,14 +126,32 @@ trait ActionHooks
      */
     public function eb_lorem_generate_posts()
     {
-        if (isset($_POST['post_count'])&&current_user_can('manage_options') && \check_ajax_referer('eb_lorem_generate_posts', 'nonce', false)&& \wp_insert_post(['post_title' =>'post count: ' . $_POST['post_count'], 'post_status'=>'publish'])) {
+        if (isset($_POST['post_count'])&&current_user_can('manage_options') && \check_ajax_referer('eb_lorem_generate_posts', 'nonce', false)&& $this->_insert_new_post(absint($_POST['post_count']))) {
             $resp = ['status'=>200, 'message'=>'OK'];
             echo \json_encode($resp);
         } else {
             $resp = ['status'=>404, 'message'=>'unauthorized'];
             echo \json_encode($resp);
         }
+        die();
+    }
 
+    public function eb_lorem_delete_posts()
+    {
+        $args = array(
+          'meta_key'=>$this->_getArg('meta_key'),
+          'meta_value'=> 'true',
+          'posts_per_page'=>-1
+        );
+
+        $generated = new \WP_Query($args);
+
+        if ($generated->have_posts()): while ($generated->have_posts()):$generated->the_post();
+        $id = \get_the_ID();
+        \wp_delete_post($id);
+        endwhile;
+        endif;
+        \wp_reset_postdata();
         die();
     }
 }

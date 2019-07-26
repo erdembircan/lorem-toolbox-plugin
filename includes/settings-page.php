@@ -5,14 +5,16 @@
   <hr>
   <br />
   <h2>Generate Posts</h2>
-  <generate-posts :ajaxurl='ajax_url' :ajaxaction='ajax_action' :nonce='nonce'></generate-posts>
+  <p>There are {{post_count}} generated posts</p>
+  <generate-posts :ajaxurl='ajax_url' :ajaxactiongenerate='ajax_action_generate' :ajaxactiondelete='ajax_action_delete'
+    :nonce='nonce'></generate-posts>
 </div>
 
 <!-- settings-table template -->
 <script type='x-template' id='loremSettingsTable'>
   <form action='options.php' method='post'>
     <?php settings_fields($this->_getArg('options_key')); ?>
-    <h2>Shortcode Settings</h2>
+    <h2>Default Settings</h2>
     <table class='form-table'>
       <tr v-for='s in settings'>
         <th scope='row'>{{s.title | capF}}</th>
@@ -31,7 +33,7 @@
 <script type="x-template" id="generatePosts">
   <form :action='ajaxurl' method='post' @submit.prevent='handleForm'>
     <table class='form-table'>
-    <input type='hidden' name='action' :value='ajaxaction'>
+    <input type='hidden' name='action' :value='ajaxactiongenerate'>
     <input type='hidden' name='nonce' :value='nonce'>
       <tr>
         <th scope='row'>Number of posts</th>
@@ -41,5 +43,6 @@
       </tr>
     </table>
     <input ref='submitButton' type='submit' value='Generate Posts' class='button button-secondary'>
+    <a ref='deleteButton' @click.prevent='deleteGenerated' class='button button-secondary'>Delete Generated Posts</a>
   </form>
 </script>

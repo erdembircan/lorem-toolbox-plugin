@@ -19,5 +19,6 @@
 - [x] shortcode implementation
   - [x] lorem generation algorithm
 - [x] auto generate number of posts
+  - [ ] use generate algorithm for post title
 - [ ] localization
 - [ ] readme

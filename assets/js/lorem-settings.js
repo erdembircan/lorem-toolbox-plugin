@@ -37,7 +37,7 @@ Vue.component('settings-table', {
 
 Vue.component('generate-posts', {
   template: '#generatePosts',
-  props: ['ajaxurl', 'ajaxaction', 'nonce'],
+  props: ['ajaxurl', 'ajaxactiongenerate', 'nonce', 'ajaxactiondelete'],
   data() {
     return {
       postCount: 5,
@@ -54,13 +54,17 @@ Vue.component('generate-posts', {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `nonce=${this.nonce}&post_count=${this.postCount}&action=${this.ajaxaction}`,
+        body: `nonce=${this.nonce}&post_count=${this.postCount}&action=${this.ajaxactiongenerate}`,
       })
         .then(resp => {
           this.changeSubmitButtonStatus(false);
           return resp.json();
         })
         .then(j => console.log(j));
+    },
+    deleteGenerated() {
+      const url = `${this.ajaxurl}?action=${this.ajaxactiondelete}`;
+      return fetch(url).then(resp => console.log(resp));
     },
   },
 });
