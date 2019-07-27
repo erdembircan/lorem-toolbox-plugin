@@ -35,20 +35,25 @@ Vue.component('settings-table', {
   props: ['settings'],
 });
 
+// generate-posts component
 Vue.component('generate-posts', {
   template: '#generatePosts',
   props: ['ajaxurl', 'ajaxactiongenerate', 'nonce', 'ajaxactiondelete'],
   data() {
     return {
       postCount: 5,
+      fetching: false,
     };
   },
-  methods: {
-    changeSubmitButtonStatus(status) {
+  watch: {
+    fetching(status) {
       this.$refs.submitButton.disabled = status;
+      this.$refs.deleteButton.disabled = status;
     },
+  },
+  methods: {
     handleForm() {
-      this.changeSubmitButtonStatus(true);
+      this.fetching = true;
       return fetch(this.ajaxurl, {
         method: 'POST',
         headers: {
@@ -57,14 +62,22 @@ Vue.component('generate-posts', {
         body: `nonce=${this.nonce}&post_count=${this.postCount}&action=${this.ajaxactiongenerate}`,
       })
         .then(resp => {
-          this.changeSubmitButtonStatus(false);
+          this.fetching = false;
           return resp.json();
         })
-        .then(j => console.log(j));
+        .then(j => {
+          this.$emit('fetched', j.data);
+        });
     },
     deleteGenerated() {
+      this.fetching = true;
       const url = `${this.ajaxurl}?action=${this.ajaxactiondelete}`;
-      return fetch(url).then(resp => console.log(resp));
+      return fetch(url)
+        .then(resp => resp.json())
+        .then(j => {
+          this.fetching = false;
+          this.$emit('fetched', j.data);
+        });
     },
   },
 });
@@ -73,4 +86,11 @@ Vue.component('generate-posts', {
 new Vue({
   data: loremSettings.data,
   components: ['settings-table', 'generate-posts'],
+  methods: {
+    updatePostCount(data) {
+      if (data) {
+        this.post_count = data.totalCount;
+      }
+    },
+  },
 }).$mount('#lorem_app');

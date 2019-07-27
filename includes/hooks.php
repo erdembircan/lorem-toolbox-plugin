@@ -80,6 +80,7 @@ trait ActionHooks
             \wp_register_script('vuejs', "https://cdn.jsdelivr.net/npm/vue");
 
             \wp_enqueue_script('lorem-settings', plugin_dir_url($this->_getArg('file')). 'assets/js/lorem-settings.js', array('vuejs'), false, true);
+            \wp_enqueue_style('lorem-settings-style', plugin_dir_url($this->_getArg('file')). 'assets/css/eb_lorem_style.css');
 
             $options_key = $this->_getArg('options_key');
 
@@ -127,15 +128,22 @@ trait ActionHooks
     public function eb_lorem_generate_posts()
     {
         if (isset($_POST['post_count'])&&current_user_can('manage_options') && \check_ajax_referer('eb_lorem_generate_posts', 'nonce', false)&& $this->_insert_new_post(absint($_POST['post_count']))) {
-            $resp = ['status'=>200, 'message'=>'OK'];
+            $resp = ['data'=> ['totalCount'=> $this->count_generated_posts()]];
             echo \json_encode($resp);
         } else {
-            $resp = ['status'=>404, 'message'=>'unauthorized'];
+            $resp = ['error'=>'an error occured, please try again later'];
             echo \json_encode($resp);
         }
         die();
     }
 
+    /**
+     * ajax endpoint for deleting all generated posts
+     *
+     * will be identifying the generated ones with post meta data
+     *
+     * @return string response data
+     */
     public function eb_lorem_delete_posts()
     {
         $args = array(
@@ -152,6 +160,8 @@ trait ActionHooks
         endwhile;
         endif;
         \wp_reset_postdata();
+        $resp = ['data'=> ['totalCount'=> $this->count_generated_posts()]];
+        echo \json_encode($resp);
         die();
     }
 }

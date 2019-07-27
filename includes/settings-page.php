@@ -5,9 +5,9 @@
   <hr>
   <br />
   <h2>Generate Posts</h2>
-  <p>There are {{post_count}} generated posts</p>
+  <p>There are <b>{{post_count}} </b>generated posts</p>
   <generate-posts :ajaxurl='ajax_url' :ajaxactiongenerate='ajax_action_generate' :ajaxactiondelete='ajax_action_delete'
-    :nonce='nonce'></generate-posts>
+    :nonce='nonce' @fetched='updatePostCount'></generate-posts>
 </div>
 
 <!-- settings-table template -->
@@ -38,11 +38,12 @@
       <tr>
         <th scope='row'>Number of posts</th>
         <td>
-          <input type='number' min='1' max='100' v-model:value='postCount' name='post_count'>
+          <input type='number' min='1' max='1000' v-model:value='postCount' name='post_count'>
         </td>
       </tr>
     </table>
     <input ref='submitButton' type='submit' value='Generate Posts' class='button button-secondary'>
-    <a ref='deleteButton' @click.prevent='deleteGenerated' class='button button-secondary'>Delete Generated Posts</a>
+    <input ref='deleteButton' type='button' @click.prevent='deleteGenerated' class='button button-red' value='Delete Generated Posts'>
+    <span v-if='fetching' class='fetch-indicator'>🔷</span>
   </form>
 </script>

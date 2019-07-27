@@ -94,7 +94,13 @@ class LoremClass
         
         $content = $this->_generate_lorem($p, $pMin, $pMax, $sMin, $sMax);
 
-        return $content;
+        array_walk($content, function (&$p) {
+            $p = "<p>$p</p>";
+        });
+
+        $generated_content = \implode('', $content);
+
+        return $generated_content;
     }
 
     /**
@@ -113,8 +119,8 @@ class LoremClass
         $lorem = $use_custom=='off'?($this->_get_options('internal'))['lorem_raw']:$this->_get_options('lorem_raw');
         $words = array_map('\strtolower', \preg_split('/\W/', $lorem));
 
-        $generated = '';
-        $generated .= "<pre>p=$p, pMin=$pMin, pMax=$pMax, sMin=$sMin, sMax=$sMax</pre>";
+        $generated = array();
+
         for ($i=0; $i < $p; $i++) {
             $wordCount = rand($pMin, $pMax);
             $paragraph= '';
@@ -133,7 +139,7 @@ class LoremClass
 
                 $x += $minSentenceLength-1;
             }
-            $generated .= "<p>$paragraph</p>";
+            $generated[]= $paragraph;
         }
 
         return $generated;
@@ -250,7 +256,7 @@ class LoremClass
     {
         for ($c=0; $c<$count; $c++) {
             $post_args = array(
-            'post_title' => 'Lorem generated ' . time(),
+            'post_title' => implode('', $this->_generate_lorem(1, 5, 9)),
             'post_status' => 'publish',
             'post_content' => '[lorem]',
             'meta_input' => [$this->_getArg('meta_key') => 'true']
