@@ -78,8 +78,11 @@ trait ActionHooks
     {
         if ($hook == $this->_getArg('page_hook_suffix')) {
             \wp_register_script('vuejs', "https://cdn.jsdelivr.net/npm/vue");
+            \wp_register_script('tweenmax', "https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js");
+            \wp_register_script('vue-resource', "https://cdn.jsdelivr.net/npm/vue-resource");
+            \wp_register_script('lorem-settings-components', plugin_dir_url($this->_getArg('file')). 'assets/js/lorem-settings-components.js', array('vuejs', 'vue-resource'), false, true);
 
-            \wp_enqueue_script('lorem-settings', plugin_dir_url($this->_getArg('file')). 'assets/js/lorem-settings.js', array('vuejs'), false, true);
+            \wp_enqueue_script('lorem-settings', plugin_dir_url($this->_getArg('file')). 'assets/js/lorem-settings.js', array('vuejs','tweenmax','vue-resource','lorem-settings-components'), false, true);
             \wp_enqueue_style('lorem-settings-style', plugin_dir_url($this->_getArg('file')). 'assets/css/eb_lorem_style.css');
 
             $options_key = $this->_getArg('options_key');
@@ -146,6 +149,11 @@ trait ActionHooks
      */
     public function eb_lorem_delete_posts()
     {
+        if (!current_user_can('manage_options') || !\check_ajax_referer('eb_lorem_generate_posts', 'nonce', false)) {
+            $resp = ['error' => 'unauthorized'];
+            echo json_encode($resp);
+            die();
+        }
         $args = array(
           'meta_key'=>$this->_getArg('meta_key'),
           'meta_value'=> 'true',

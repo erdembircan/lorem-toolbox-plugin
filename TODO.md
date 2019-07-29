@@ -23,9 +23,10 @@
   - [x] lorem generation algorithm
 - [x] auto generate number of posts
   - [x] use generate algorithm for post title
-  - [ ] delete posts rights checking
-  - [ ] improved delete post performance
-- [ ] front-end stuff
-  - [ ] ajax call logics
+  - [x] delete posts rights checking
+  - [x] improved delete post performance
+- [x] front-end stuff
+  - [x] vue-mixin for ajax calls
+  - [x] error display for ajax calls
 - [ ] localization
 - [ ] readme

@@ -5,10 +5,17 @@
   <hr>
   <br />
   <h2>Generate Posts</h2>
-  <p>There are <b>{{post_count}} </b>generated posts</p>
+  <p>There are <b>{{animatedCount}}</b> generated posts</p>
   <generate-posts :ajaxurl='ajax_url' :ajaxactiongenerate='ajax_action_generate' :ajaxactiondelete='ajax_action_delete'
     :nonce='nonce' @fetched='updatePostCount'></generate-posts>
 </div>
+
+<script type='x-template' id='loremStatus'>
+  <div>
+    <span v-show='fetching' class='eb-lorem-fetch-indicator'>🔷</span>
+    <span v-show='fetching ===false' :style="{color: statusColor}">{{data.message}}</span>
+  </div>
+</script>
 
 <!-- settings-table template -->
 <script type='x-template' id='loremSettingsTable'>
@@ -42,8 +49,10 @@
         </td>
       </tr>
     </table>
-    <input ref='submitButton' type='submit' value='Generate Posts' class='button button-secondary'>
-    <input ref='deleteButton' type='button' @click.prevent='deleteGenerated' class='button button-red' value='Delete Generated Posts'>
-    <span v-if='fetching' class='fetch-indicator'>🔷</span>
+    <div class='eb-lorem-button-container'>
+      <input ref='submitButton' type='submit' value='Generate Posts' class='button button-secondary'>
+      <input ref='deleteButton' type='button' @click.prevent='deleteGenerated' class='button eb-lorem-button-red' value='Delete Generated Posts'>
+      <status :fetching='fetching' :data='messageData'></status>
+    </div>
   </form>
 </script>

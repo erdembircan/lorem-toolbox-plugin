@@ -1,10 +1,19 @@
-.button-red {
+.eb-lorem-button-red {
   background-color: red !important;
   color: white !important;
 }
 
-.fetch-indicator > img {
+.eb-lorem-fetch-indicator > img {
   animation: pulse 0.5s infinite alternate;
+}
+
+.eb-lorem-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.eb-lorem-button-container > * {
+  margin-right: 10px !important;
 }
 
 @keyframes pulse {

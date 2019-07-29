@@ -18,79 +18,40 @@ Vue.filter('capAF', val =>
     .join(' ')
 );
 
-// setting-row component
-Vue.component('setting-row', {
-  props: ['element', 'domProps'],
-  render(h) {
-    const options = {
-      domProps: this.domProps,
-    };
-    return h(this.element, options);
+Vue.use(VueResource);
+Vue.http.options.emulateJSON = true;
+Vue.http.options.emulateHTTP = true;
+
+// mixins
+Vue.mixin({
+  computed: {
+    resource() {
+      return this.$resource(this.ajaxurl);
+    },
   },
 });
 
-// settings-table component
-Vue.component('settings-table', {
-  template: '#loremSettingsTable',
-  props: ['settings'],
-});
-
-// generate-posts component
-Vue.component('generate-posts', {
-  template: '#generatePosts',
-  props: ['ajaxurl', 'ajaxactiongenerate', 'nonce', 'ajaxactiondelete'],
-  data() {
-    return {
-      postCount: 5,
-      fetching: false,
-    };
-  },
-  watch: {
-    fetching(status) {
-      this.$refs.submitButton.disabled = status;
-      this.$refs.deleteButton.disabled = status;
-    },
-  },
-  methods: {
-    handleForm() {
-      this.fetching = true;
-      return fetch(this.ajaxurl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `nonce=${this.nonce}&post_count=${this.postCount}&action=${this.ajaxactiongenerate}`,
-      })
-        .then(resp => {
-          this.fetching = false;
-          return resp.json();
-        })
-        .then(j => {
-          this.$emit('fetched', j.data);
-        });
-    },
-    deleteGenerated() {
-      this.fetching = true;
-      const url = `${this.ajaxurl}?action=${this.ajaxactiondelete}`;
-      return fetch(url)
-        .then(resp => resp.json())
-        .then(j => {
-          this.fetching = false;
-          this.$emit('fetched', j.data);
-        });
-    },
-  },
-});
+loremSettings.data.tweenedNumber = loremSettings.data.post_count;
 
 // main Vue instance
 new Vue({
   data: loremSettings.data,
-  components: ['settings-table', 'generate-posts'],
+  components: ['settings-table', 'generate-posts', 'status'],
   methods: {
     updatePostCount(data) {
       if (data) {
         this.post_count = data.totalCount;
       }
+    },
+  },
+  computed: {
+    animatedCount() {
+      return parseInt(this.tweenedNumber, 10).toFixed(0);
+    },
+  },
+  watch: {
+    post_count(newVal) {
+      TweenLite.to(this.$data, 1, { tweenedNumber: newVal });
     },
   },
 }).$mount('#lorem_app');
