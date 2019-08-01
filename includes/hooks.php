@@ -77,7 +77,7 @@ trait ActionHooks
     public function admin_scripts($hook)
     {
         if ($hook == $this->_getArg('page_hook_suffix')) {
-            \wp_register_script('vuejs', "https://cdn.jsdelivr.net/npm/vue");
+            \wp_register_script('vuejs', "https://unpkg.com/vue");
             \wp_register_script('tweenmax', "https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js");
             \wp_register_script('vue-resource', "https://cdn.jsdelivr.net/npm/vue-resource");
             \wp_register_script('lorem-settings-components', plugin_dir_url($this->_getArg('file')). 'assets/js/lorem-settings-components.js', array('vuejs', 'vue-resource'), false, true);
@@ -98,6 +98,10 @@ trait ActionHooks
                 'ajax_action_generate' =>'eb_lorem_generate_posts',
                 'ajax_action_delete' =>'eb_lorem_delete_posts',
                 'nonce' => wp_create_nonce('eb_lorem_generate_posts'),
+                'dev_data'=> ['name'=>'Erdem Bircan', 'email'=>'erdem.erdembircan@gmail.com',
+                'version'=> (\get_plugin_data($this->_getArg('file')))['Version'],
+                'github'=>'https://github.com/erdembircan'
+              ],
                 'inputs' => array(
                     [   'title' => 'use custom phrases' ,'elements'=>[['element'=>'input', 'domProps'=> ['name' => $options_key . '[use_custom]' ,'type'=>'checkbox', 'checked'=> $this->_get_options('use_custom') == 'on' ? 'checked':'']]]],
                     ['title' => 'default number of paragraphs', 'elements'=>[['element'=>'input', 'domProps'=> [ 'name' => $options_key . '[shortcode_default_paragraph_length]' ,'type'=>'number', 'value'=> $this->_get_options('shortcode_default_paragraph_length'),'min'=>1, 'max'=>100]]]],

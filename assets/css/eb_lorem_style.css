@@ -16,6 +16,31 @@
   margin-right: 10px !important;
 }
 
+.eb-lorem-info-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  color: gray;
+}
+
+.eb-lorem-info-container > .items > a {
+  padding: 5px;
+}
+
+.eb-lorem-info-container > .items > a > img {
+  transition: transform 0.3s linear;
+}
+
+.eb-lorem-info-container > .items > a > img:hover {
+  transform: scale(1.5);
+}
+
+.eb-lorem-tip {
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 1px 1px 1px grey;
+}
+
 @keyframes pulse {
   0% {
     transform: scale(0);

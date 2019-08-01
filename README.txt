@@ -1,1 +1,0 @@
-// template readme for WordPress Plugin, populate it according to the plugin guidelines

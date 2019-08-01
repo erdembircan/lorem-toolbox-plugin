@@ -36,7 +36,6 @@ loremSettings.data.tweenedNumber = loremSettings.data.post_count;
 // main Vue instance
 new Vue({
   data: loremSettings.data,
-  components: ['settings-table', 'generate-posts', 'status'],
   methods: {
     updatePostCount(data) {
       if (data) {

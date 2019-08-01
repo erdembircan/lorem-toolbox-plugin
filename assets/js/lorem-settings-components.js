@@ -81,8 +81,25 @@ Vue.component('generate-posts', {
           this.handleStatus({ message: err.message, type: 'error' });
         });
     },
-    handleStatus(mD) {
-      this.messageData = mD;
+    handleStatus(md) {
+      this.messageData = md;
     },
   },
+});
+
+// dev-info component
+Vue.component('dev-info', {
+  props: ['devdata'],
+  template: '#devInfo',
+});
+
+// lorem-tip component
+Vue.component('lorem-tip', {
+  props: ['message'],
+  computed: {
+    getSlot() {
+      return this.$slots.default[0].text;
+    },
+  },
+  template: '#loremTip',
 });

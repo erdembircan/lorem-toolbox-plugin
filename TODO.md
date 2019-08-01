@@ -28,5 +28,6 @@
 - [x] front-end stuff
   - [x] vue-mixin for ajax calls
   - [x] error display for ajax calls
+  - [x] info component
 - [ ] localization
 - [ ] readme
