@@ -30,4 +30,5 @@
   - [x] error display for ajax calls
   - [x] info component
 - [ ] localization
+  - [ ] checkout new localization methods for WordPress
 - [ ] readme
