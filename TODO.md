@@ -29,7 +29,7 @@
   - [x] vue-mixin for ajax calls
   - [x] error display for ajax calls
   - [x] info component
-  - [ ] bundle js with build tools
+  - ~~[ ] bundle js with build tools~~
 - [ ] localization
   - [ ] checkout new localization methods for WordPress
 - [ ] readme
