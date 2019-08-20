@@ -74,15 +74,26 @@ trait ActionHooks
         \add_shortcode('lorem', array($this, 'shortcode_logic'));
     }
 
+    /**
+     * Frontend scripts, styles and data
+     *
+     * @param string $hook slug value for current page
+     * @return void
+     */
     public function admin_scripts($hook)
     {
         if ($hook == $this->_getArg('page_hook_suffix')) {
             \wp_register_script('vuejs', "https://unpkg.com/vue");
             \wp_register_script('tweenmax', "https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js");
             \wp_register_script('vue-resource', "https://cdn.jsdelivr.net/npm/vue-resource");
-            \wp_register_script('lorem-settings-components', plugin_dir_url($this->_getArg('file')). 'assets/js/lorem-settings-components.js', array('vuejs', 'vue-resource'), false, true);
 
-            \wp_enqueue_script('lorem-settings', plugin_dir_url($this->_getArg('file')). 'assets/js/lorem-settings.js', array('vuejs','tweenmax','vue-resource','lorem-settings-components'), false, true);
+            $resource_path = 'assets/js/lorem-settings-components.js';
+            $resource_version = filemtime(\plugin_dir_path($this->_getArg('file')) . $resource_path);
+            \wp_register_script('lorem-settings-components', plugin_dir_url($this->_getArg('file')). $resource_path, array('vuejs', 'vue-resource'), $resource_version, true);
+
+            $main_js_path = 'assets/js/lorem-settings.js';
+            $main_js_version = filemtime(\plugin_dir_path($this->_getArg('file')) . $main_js_path);
+            \wp_enqueue_script('lorem-settings', plugin_dir_url($this->_getArg('file')). $main_js_path, array('vuejs','tweenmax','vue-resource','lorem-settings-components'), $main_js_version, true);
             \wp_enqueue_style('lorem-settings-style', plugin_dir_url($this->_getArg('file')). 'assets/css/eb_lorem_style.css');
 
             $options_key = $this->_getArg('options_key');
