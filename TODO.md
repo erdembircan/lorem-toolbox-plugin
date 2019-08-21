@@ -33,3 +33,4 @@
 - [ ] localization
   - [ ] checkout new localization methods for WordPress
 - [ ] readme
+- [ ] banner image
