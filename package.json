@@ -1,0 +1,16 @@
+{
+  "name": "lorem-wordpress-plugin",
+  "version": "1.0.0",
+  "description": "various development/production tools for lorem-wordpress-plugin",
+  "main": "index.js",
+  "repository": "git@github.com:erdembircan/lorem-wordpress-plugin.git",
+  "author": "Erdem Bircan <erdem.erdembircan@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev:start": "browser-sync start --proxy localhost:8080 --files '!node_modules/**/*.*, **/*.php, **/*.js, **/*.css'"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}

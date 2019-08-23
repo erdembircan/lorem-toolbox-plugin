@@ -34,6 +34,7 @@
   - [x] info component
   - ~~[ ] bundle js with build tools~~
 - [ ] localization
+  - [ ] may entirely give up whole localisation thing
   - [ ] checkout new localization methods for WordPress
 - [ ] readme
 - [ ] banner image
@@ -41,5 +42,6 @@
   - number of posts generated
 - [x] meta box for shortcode attributes display
   - [x] enable adding lorem from meta box
-- [ ] auto reload browser for development
-  - [ ] try out browser-sync
+- [x] auto reload browser for development
+  - [x] try out browser-sync
+- [ ] homepage for plugin

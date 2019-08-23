@@ -52,7 +52,7 @@ trait ActionHooks
     {
         $options_key = $this->_getArg('options_key');
         \register_setting($options_key, $options_key, array($this, 'sanitize_form'));
-        add_meta_box('eb_lorem_meta_box', 'Lorem Plugin', array($this, 'lorem_meta_box_display'), 'post');
+        add_meta_box('eb_lorem_meta_box', '<span style="color:skyblue">Lorem Plugin</span>', array($this, 'lorem_meta_box_display'), 'post');
     }
 
     /**
