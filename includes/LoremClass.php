@@ -84,15 +84,16 @@ class LoremClass
     {
         $default_atts = array(
         'p'=> $this->_get_options('shortcode_default_paragraph_length'),
-        'pMin'=> $this->_get_options('shortcode_default_min_paragraph_length'),
-        'pMax'=> $this->_get_options('shortcode_default_max_paragraph_length'),
-        'sMin'=> $this->_get_options('shortcode_default_min_sentence'),
-        'sMax'=> $this->_get_options('shortcode_default_max_sentence'),
+        'pmin'=> $this->_get_options('shortcode_default_min_paragraph_length'),
+        'pmax'=> $this->_get_options('shortcode_default_max_paragraph_length'),
+        'smin'=> $this->_get_options('shortcode_default_min_sentence'),
+        'smax'=> $this->_get_options('shortcode_default_max_sentence'),
       );
+
         $parsed_atts = \shortcode_atts($default_atts, $atts);
         \extract($parsed_atts);
         
-        $content = $this->_generate_lorem($p, $pMin, $pMax, $sMin, $sMax);
+        $content = $this->_generate_lorem($p, $pmin, $pmax, $smin, $smax);
 
         array_walk($content, function (&$p) {
             $p = "<p>$p</p>";

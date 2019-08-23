@@ -1,3 +1,3 @@
 # 🐛 bug report
 
-- [ ] shortcode atts only working for `p` (paragraph) attribute.
+- [x] [**01**] shortcode atts only working for `p` (paragraph) attribute.

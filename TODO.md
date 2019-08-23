@@ -5,10 +5,13 @@
 - [x] settings page
 
   - [x] shortcode settings
+
     - ~~default sentence amount~~
     - [x] min/max sentence length
     - [x] min/max paragraph word length
     - [x] use custom sentences
+    - [ ] show shortcode override codes for settings
+
   - ~~auto-generate options~~
     - ~~number of posts~~
     - ~~use more tag~~
