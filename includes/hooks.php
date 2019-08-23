@@ -52,6 +52,33 @@ trait ActionHooks
     {
         $options_key = $this->_getArg('options_key');
         \register_setting($options_key, $options_key, array($this, 'sanitize_form'));
+        add_meta_box('eb_lorem_meta_box', 'Lorem Plugin', array($this, 'lorem_meta_box_display'), 'post');
+    }
+
+    /**
+     * WordPress post meta box display
+     *
+     * @param object $post post object
+     * @return void
+     */
+    public function lorem_meta_box_display($post)
+    {
+        $current_content = $post->post_content;
+        $have_lorem_shortcut =filter_var(\preg_match('/.*(\[lorem(\s.+)?])/', $current_content), FILTER_VALIDATE_BOOLEAN);
+        require(plugin_dir_path($this->_getArg('file')) . 'includes/lorem_meta_box_display.php');
+    }
+
+    /**
+     * WordPress save post hook callback
+     *
+     * will be using this hook mainly for adding lorem functionality from meta-box
+     *
+     * @param number $post_id associated post id
+     * @return void
+     */
+    public function save_post($post_id)
+    {
+        //TODO
     }
 
     /**

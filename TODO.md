@@ -37,3 +37,9 @@
   - [ ] checkout new localization methods for WordPress
 - [ ] readme
 - [ ] banner image
+- [ ] admin dashboard info
+  - number of posts generated
+- [x] meta box for shortcode attributes display
+  - [x] enable adding lorem from meta box
+- [ ] auto reload browser for development
+  - [ ] try out browser-sync
