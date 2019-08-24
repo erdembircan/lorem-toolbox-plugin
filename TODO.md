@@ -34,7 +34,7 @@
   - [x] info component
   - ~~[ ] bundle js with build tools~~
 - [ ] localization
-  - [ ] may entirely give up whole localisation thing
+  - [x] may entirely give up whole localisation thing
   - [ ] checkout new localization methods for WordPress
 - [ ] readme
 - [ ] banner image
