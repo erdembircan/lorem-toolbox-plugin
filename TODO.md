@@ -45,3 +45,4 @@
 - [x] auto reload browser for development
   - [x] try out browser-sync
 - [ ] homepage for plugin
+- [ ] zip testing
