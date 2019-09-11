@@ -33,7 +33,7 @@
   - [x] error display for ajax calls
   - [x] info component
   - ~~[ ] bundle js with build tools~~
-- [ ] localization
+- [x] localization
   - [x] may entirely give up whole localisation thing
   - [ ] checkout new localization methods for WordPress
 - [ ] readme
