@@ -73,7 +73,7 @@ class LoremClass
         \add_action('wp_ajax_eb_lorem_generate_posts', array($this, 'eb_lorem_generate_posts'));
         \add_action('wp_ajax_eb_lorem_delete_posts', array($this, 'eb_lorem_delete_posts'));
 
-        \add_action('save_post', array($this, 'save_post'));
+        \add_action('save_post', array($this, 'save_post'), 10, 2);
     }
 
     /**

@@ -56,6 +56,17 @@ trait ActionHooks
     }
 
     /**
+     * checks the content of the post for any lorem shortcode
+     *
+     * @param string $content post content
+     * @return boolean have lorem shortcode or not
+     */
+    public function have_lorem($content)
+    {
+        return filter_var(\preg_match('/.*(\[lorem(\s.+)?])/', $content), FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
      * WordPress post meta box display
      *
      * @param object $post post object
@@ -64,7 +75,8 @@ trait ActionHooks
     public function lorem_meta_box_display($post)
     {
         $current_content = $post->post_content;
-        $have_lorem_shortcut =filter_var(\preg_match('/.*(\[lorem(\s.+)?])/', $current_content), FILTER_VALIDATE_BOOLEAN);
+        $have_lorem_shortcut = $this->have_lorem($current_content);
+
         require(plugin_dir_path($this->_getArg('file')) . 'includes/lorem_meta_box_display.php');
     }
 
@@ -76,9 +88,22 @@ trait ActionHooks
      * @param number $post_id associated post id
      * @return void
      */
-    public function save_post($post_id)
+    public function save_post($post_id, $post)
     {
-        //TODO
+        if (! wp_is_post_revision($post_id)) {
+            if (isset($_POST['eb_add_lorem']) && ($this->have_lorem($post->post_content)) == false) {
+                remove_action('save_post', array($this, 'save_post'));
+                $content_array = array('ID'=>$post_id, 'post_content' => $post->post_content . '[lorem]');
+                wp_update_post($content_array);
+                add_action('save_post', array($this, 'save_post'), 10, 2);
+            } elseif (isset($_POST['eb_remove_lorem'])&& ($this->have_lorem($post->post_content))==true) {
+                remove_action('save_post', array($this, 'save_post'));
+                $replaced_content = \preg_replace('/(\[lorem(\s.+)?\])/', '', $post->post_content);
+                $content_array = array('ID'=>$post_id, 'post_content' => $replaced_content);
+                wp_update_post($content_array);
+                add_action('save_post', array($this, 'save_post'), 10, 2);
+            }
+        }
     }
 
     /**
