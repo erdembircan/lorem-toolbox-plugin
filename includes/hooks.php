@@ -187,7 +187,7 @@ trait ActionHooks
                 )
             );
             wp_localize_script('lorem-settings', 'loremSettings', $settings);
-        } elseif ($hook=='post.php') {
+        } elseif ($hook=='post.php' || $hook =='post-new.php') {
             $meta_js_root_path = 'assets/js/lorem-meta-box.js';
             $meta_js = \plugin_dir_url($this->_getArg('file')) . $meta_js_root_path;
             $meta_js_version = \filemtime(plugin_dir_path($this->_getArg('file')). $meta_js_root_path);

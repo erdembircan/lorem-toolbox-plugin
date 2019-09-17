@@ -44,5 +44,8 @@
   - [x] enable adding lorem from meta box
 - [x] auto reload browser for development
   - [x] try out browser-sync
+- [ ] refactor enque scripts/styles
+  - smart algo for differentiating scripts from styles
+  - function for getting path and generating version for files
 - [ ] homepage for plugin
 - [ ] zip testing

@@ -1,0 +1,24 @@
+{
+  "extends": ["airbnb-base", "prettier"],
+  "plugins": ["import", "prettier"],
+  "env": {
+    "browser": true,
+    "jquery": true
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "printWidth": 120
+      }
+    ]
+  },
+  "globals": {
+    "Vue": true,
+    "loremSettings": true,
+    "TweenLite": true,
+    "VueResource": true
+  }
+}

@@ -8,9 +8,17 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev:start": "browser-sync start --proxy localhost:8080 --files '!node_modules/**/*.*, **/*.php, **/*.js, **/*.css'"
+    "dev:start": "browser-sync start --proxy localhost:8080 --files '!node_modules/**/*.*, **/*.php, **/*.js, **/*.css'",
+    "lint": "eslint assets/js"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.7"
+    "babel-eslint": "^10.0.3",
+    "browser-sync": "^2.26.7",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2"
   }
 }
