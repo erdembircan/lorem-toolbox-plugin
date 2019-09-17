@@ -19,6 +19,11 @@
     </tr>
   </table>
   <div>
+    <button id='eb_toggle_button' class='eb_area_toggle_button' aria-expanded='true'><span
+        class='eb_toggle_indicator'></span></button>
+    <p>legend</p>
+  </div>
+  <div id='legend_table'>
     <table>
       <tr scope='col'>
         <td>p</td>

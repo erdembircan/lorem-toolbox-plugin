@@ -1,0 +1,14 @@
+.eb_area_toggle_button {
+  background: none;
+  border: none;
+  text-align: center;
+  float: right;
+  cursor: pointer;
+}
+
+.eb_toggle_indicator:before {
+  color: gray;
+  font-family: "dashicons";
+  font-size: 20px;
+  content: "\f142";
+}
