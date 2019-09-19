@@ -288,4 +288,29 @@ class LoremClass
 
         return $generated_posts->found_posts;
     }
+
+    /**
+     * enqueue files (js/css)
+     *
+     * @param string $path file path relative to plugin root
+     * @param array $options options array
+     * @return void
+     */
+    public function enqueue_file($path, $options = [])
+    {
+        $default_options = ['footer'=>false, 'deps'=>[]];
+        $merged_options = array_merge($default_options, $options);
+
+        $is_css = (\pathinfo($path))['extension'] == 'css';
+        $url_path = \plugin_dir_url($this->_getArg('file')) . $path;
+        $dir_path = \plugin_dir_path($this->_getArg('file')) . $path;
+        $version = filemtime($dir_path);
+        \extract($merged_options);
+
+        if ($is_css) {
+            \wp_enqueue_style($handle, $url_path, $deps, $version);
+        } else {
+            \wp_enqueue_script($handle, $url_path, $deps, $version, $footer);
+        }
+    }
 }

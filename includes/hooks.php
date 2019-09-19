@@ -188,17 +188,9 @@ trait ActionHooks
             );
             wp_localize_script('lorem-settings', 'loremSettings', $settings);
         } elseif ($hook=='post.php' || $hook =='post-new.php') {
-            $meta_js_root_path = 'assets/js/lorem-meta-box.js';
-            $meta_js = \plugin_dir_url($this->_getArg('file')) . $meta_js_root_path;
-            $meta_js_version = \filemtime(plugin_dir_path($this->_getArg('file')). $meta_js_root_path);
+            $this->enqueue_file('assets/js/lorem-meta-box.js', array('handle'=>'eb_lorem_metabox', 'footer'=>true, 'deps' => ['jquery']));
 
-            $meta_css_root_path = 'assets/css/eb_meta_box_style.css';
-            $meta_css = \plugin_dir_url($this->_getArg('file')) . $meta_css_root_path;
-            $meta_css_version = \filemtime(plugin_dir_path($this->_getArg('file')). $meta_css_root_path);
-
-            wp_enqueue_script('eb_lorem_metabox', $meta_js, ['jquery'], $meta_js_version, true);
-
-            wp_enqueue_style('eb_lorem_metabox_style', $meta_css, [], $meta_css_version);
+            $this->enqueue_file('assets/css/eb_meta_box_style.css', array('handle' =>'eb_lorem_metabox_style'));
         }
     }
 
