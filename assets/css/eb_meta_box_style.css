@@ -10,5 +10,27 @@
   color: gray;
   font-family: "dashicons";
   font-size: 20px;
+}
+
+.eb_area_toggle_button[aria-expanded="false"] .eb_toggle_indicator:before {
+  /* up arrow */
   content: "\f142";
+}
+
+.eb_area_toggle_button[aria-expanded="true"] .eb_toggle_indicator:before {
+  /* down arrow */
+  content: "\f140";
+}
+
+#legend_table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#legend_table table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#legend_table table tr td:first-child {
+  font-weight: bold;
 }

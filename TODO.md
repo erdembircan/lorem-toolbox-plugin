@@ -10,7 +10,7 @@
     - [x] min/max sentence length
     - [x] min/max paragraph word length
     - [x] use custom sentences
-    - [ ] show shortcode override codes for settings
+    - [x] show shortcode override codes for settings
 
   - ~~auto-generate options~~
     - ~~number of posts~~
@@ -36,16 +36,17 @@
 - [x] localization
   - [x] may entirely give up whole localisation thing
   - [ ] checkout new localization methods for WordPress
-- [ ] readme
-- [ ] banner image
 - ~~[ ] admin dashboard info~~
   - number of posts generated
 - [x] meta box for shortcode attributes display
   - [x] enable adding lorem from meta box
 - [x] auto reload browser for development
   - [x] try out browser-sync
-- [ ] refactor enque scripts/styles
+- [x] refactor enque scripts/styles
   - smart algo for differentiating scripts from styles
   - function for getting path and generating version for files
 - [ ] homepage for plugin
 - [ ] zip testing
+- [ ] readme
+- [ ] banner image
+- [ ] check suitable names

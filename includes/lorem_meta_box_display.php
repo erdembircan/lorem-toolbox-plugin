@@ -19,9 +19,9 @@
     </tr>
   </table>
   <div>
-    <button id='eb_toggle_button' class='eb_area_toggle_button' aria-expanded='true'><span
+    <button id='eb_toggle_button' class='eb_area_toggle_button' aria-expanded='false'><span
         class='eb_toggle_indicator'></span></button>
-    <p>legend</p>
+    <i>legend</i>
   </div>
   <div id='legend_table'>
     <table>

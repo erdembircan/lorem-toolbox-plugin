@@ -1,2 +1,3 @@
-> there was a hole here, it is gone now...
+# [*lorem*] WordPress Plugin
 
+> check `TODO.md` for current roadmap and todo list
