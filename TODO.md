@@ -48,5 +48,10 @@
 - [ ] homepage for plugin
 - [ ] zip testing
 - [ ] readme
+  - [readme validator](https://wordpress.org/plugins/developers/readme-validator/)
+  - [readme generator](https://generatewp.com/plugin-readme/)
 - [ ] banner image
 - [ ] check suitable names
+- [ ] submission
+  - [ ] so far decided on the name `Lorem Toolbox`
+  - [general submission guidelines](https://wordpress.org/plugins/developers/#readme)
