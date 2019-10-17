@@ -54,4 +54,5 @@
 - [ ] check suitable names
 - [ ] submission
   - [ ] so far decided on the name `Lorem Toolbox`
+    - [ ] change the folder name to match decided name
   - [general submission guidelines](https://wordpress.org/plugins/developers/#readme)

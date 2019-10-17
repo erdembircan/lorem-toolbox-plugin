@@ -1,9 +1,15 @@
 <?php
 /**
  * Plugin Name: Lorem Wordpress Plugin
+ * Plugin URI: https://erdembircan.github.io/lorem-wordpress-plugin/
  * Author: Erdem Bircan
+ * Author URI: https://erdembircan.github.io
  * Description: Lorem Wordpress Plugin
+ * Requires at least: 5.1
+ * Requires PHP: 7.2
  * Version: 1.0.0
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.htm
  */
 namespace erdembircan\lorem_plugin;
 
