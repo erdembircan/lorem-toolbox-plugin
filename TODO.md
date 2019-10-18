@@ -45,8 +45,8 @@
 - [x] refactor enque scripts/styles
   - smart algo for differentiating scripts from styles
   - function for getting path and generating version for files
+- [x] zip testing
 - [ ] homepage for plugin
-- [ ] zip testing
 - [ ] readme
   - [readme validator](https://wordpress.org/plugins/developers/readme-validator/)
   - [readme generator](https://generatewp.com/plugin-readme/)

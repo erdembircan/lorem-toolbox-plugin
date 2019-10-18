@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "dev:start": "browser-sync start --proxy localhost:8080 --files '!node_modules/**/*.*, **/*.php, **/*.js, **/*.css'",
-    "lint": "eslint assets/js"
+    "lint": "eslint assets/js",
+    "zip": "zip -r lorem-toolbox.zip . -x 'node_modules/*' -x *.git* -x *.md*"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
