@@ -17,7 +17,7 @@ class LoremClass
      */
     private $_defaults = array(
       'prefix'=> 'eb_lorem_',
-      'page_title'=> 'lorem plugin settings',
+      'page_title'=> '🧰 lorem toolbox settings',
       /**
        * default options
        */
@@ -32,6 +32,11 @@ class LoremClass
         )
       );
 
+    /**
+     * sanitization options for batch sanitization on settings save
+     *
+     * @var array
+     */
     private $_sanitization_options = array(
         'use_custom'=>'\sanitize_text_field',
         'lorem_raw'=>'\sanitize_textarea_field',

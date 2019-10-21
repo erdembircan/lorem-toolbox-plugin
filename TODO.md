@@ -46,13 +46,15 @@
   - smart algo for differentiating scripts from styles
   - function for getting path and generating version for files
 - [x] zip testing
-- [ ] homepage for plugin
+- [x] check suitable names
 - [ ] readme
   - [readme validator](https://wordpress.org/plugins/developers/readme-validator/)
   - [readme generator](https://generatewp.com/plugin-readme/)
+  - [ ] checkout corrent versions for readme plugin fields
+- [ ] homepage for plugin
 - [ ] banner image
-- [ ] check suitable names
 - [ ] submission
-  - [ ] so far decided on the name `Lorem Toolbox`
-    - [ ] change the folder name to match decided name
+  - [x] so far decided on the name `Lorem Toolbox`
+    - ~~[ ] change the folder name to match decided name~~
+      - for development purposes i decided to not to change the folder name since it won't affect the plugin
   - [general submission guidelines](https://wordpress.org/plugins/developers/#readme)

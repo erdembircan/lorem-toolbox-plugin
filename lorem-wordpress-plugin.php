@@ -9,7 +9,7 @@
  * Requires PHP: 7.2
  * Version: 1.0.0
  * License: GPLv2 or later
- * License URI: http://www.gnu.org/licenses/gpl-2.0.htm
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 namespace erdembircan\lorem_plugin;
 
