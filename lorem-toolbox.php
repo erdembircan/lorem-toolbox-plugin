@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Lorem Wordpress Plugin
+ * Plugin Name: Lorem Toolbox Plugin
  * Plugin URI: https://erdembircan.github.io/lorem-wordpress-plugin/
  * Author: Erdem Bircan
  * Author URI: https://erdembircan.github.io
- * Description: Lorem Wordpress Plugin
+ * Description: Plugin for auto content generation for development and testing purposes.
  * Requires at least: 5.1
  * Requires PHP: 7.2
  * Version: 1.0.0

@@ -50,7 +50,7 @@
 - [ ] readme
   - [readme validator](https://wordpress.org/plugins/developers/readme-validator/)
   - [readme generator](https://generatewp.com/plugin-readme/)
-  - [ ] checkout corrent versions for readme plugin fields
+  - [x] checkout correct versions for readme plugin fields
 - [ ] homepage for plugin
 - [ ] banner image
 - [ ] submission
