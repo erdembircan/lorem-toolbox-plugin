@@ -135,18 +135,22 @@ trait ActionHooks
     public function admin_scripts($hook)
     {
         if ($hook == $this->_getArg('page_hook_suffix')) {
-            \wp_register_script('vuejs', "https://unpkg.com/vue");
-            \wp_register_script('tweenmax', "https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js");
-            \wp_register_script('vue-resource', "https://cdn.jsdelivr.net/npm/vue-resource");
+            $dir_url = plugin_dir_url($this->_getArg('file'));
 
-            $resource_path = 'assets/js/lorem-settings-components.js';
-            $resource_version = filemtime(\plugin_dir_path($this->_getArg('file')) . $resource_path);
-            \wp_register_script('lorem-settings-components', plugin_dir_url($this->_getArg('file')). $resource_path, array('vuejs', 'vue-resource'), $resource_version, true);
+            // vuejs registration
+            \wp_register_script('vuejs', $dir_url . 'assets/libs/js/vue.js', array(), '2.6.10');
 
-            $main_js_path = 'assets/js/lorem-settings.js';
-            $main_js_version = filemtime(\plugin_dir_path($this->_getArg('file')) . $main_js_path);
-            \wp_enqueue_script('lorem-settings', plugin_dir_url($this->_getArg('file')). $main_js_path, array('vuejs','tweenmax','vue-resource','lorem-settings-components'), $main_js_version, true);
-            \wp_enqueue_style('lorem-settings-style', plugin_dir_url($this->_getArg('file')). 'assets/css/eb_lorem_style.css');
+            // tweenmax registration
+            \wp_register_script('tweenmax', $dir_url . 'assets/libs/js/tweenmax.js', array(), '1.20.3');
+
+            // vue-resource registration
+            \wp_register_script('vue-resource', $dir_url . 'assets/libs/js/vue-resource.js', array(), '1.5.1');
+
+            $this->enqueue_file('assets/js/lorem-settings-components.js', array('handle' => 'lorem-settings-components', 'deps'=>['vuejs', 'vue-resource'], 'footer'=>true));
+
+            $this->enqueue_file('assets/js/lorem-settings.js', array('handle'=>'lorem-settings', 'footer'=>true, 'deps' => ['vuejs','tweenmax', 'vue-resource', 'lorem-settings-components']));
+
+            $this->enqueue_file('assets/css/eb_lorem_style.css', array('handle'=>'lorem-settings-style'));
 
             $options_key = $this->_getArg('options_key');
 

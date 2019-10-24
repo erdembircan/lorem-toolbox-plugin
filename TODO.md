@@ -58,3 +58,5 @@
     - ~~[ ] change the folder name to match decided name~~
       - for development purposes i decided to not to change the folder name since it won't affect the plugin
   - [general submission guidelines](https://wordpress.org/plugins/developers/#readme)
+
+> firefox send [link](https://send.firefox.com/download/a5d788b7795dbfd5/#gF1f2T-G_np_98-M47bCBA)
