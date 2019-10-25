@@ -51,6 +51,8 @@
   - [readme validator](https://wordpress.org/plugins/developers/readme-validator/)
   - [readme generator](https://generatewp.com/plugin-readme/)
   - [x] checkout correct versions for readme plugin fields
+- [ ] write an alternative for TweenLite functionality
+  - as it turns out, TweenLite's licence is not compatible with GPLv2 so I can't use it for a dependency for an official WordPress plugin.
 - [ ] homepage for plugin
 - [ ] banner image
 - [ ] submission

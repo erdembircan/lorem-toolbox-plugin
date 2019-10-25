@@ -18,7 +18,7 @@
   "globals": {
     "Vue": true,
     "loremSettings": true,
-    "TweenLite": true,
-    "VueResource": true
+    "VueResource": true,
+    "loremTween": true
   }
 }

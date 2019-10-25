@@ -140,15 +140,15 @@ trait ActionHooks
             // vuejs registration
             \wp_register_script('vuejs', $dir_url . 'assets/libs/js/vue.js', array(), '2.6.10');
 
-            // tweenmax registration
-            \wp_register_script('tweenmax', $dir_url . 'assets/libs/js/tweenmax.js', array(), '1.20.3');
+            // lorem-tween registration
+            \wp_register_script('lorem-tween', $dir_url . 'assets/js/lorem-tween.js', array(), '1.0.0');
 
             // vue-resource registration
             \wp_register_script('vue-resource', $dir_url . 'assets/libs/js/vue-resource.js', array(), '1.5.1');
 
             $this->enqueue_file('assets/js/lorem-settings-components.js', array('handle' => 'lorem-settings-components', 'deps'=>['vuejs', 'vue-resource'], 'footer'=>true));
 
-            $this->enqueue_file('assets/js/lorem-settings.js', array('handle'=>'lorem-settings', 'footer'=>true, 'deps' => ['vuejs','tweenmax', 'vue-resource', 'lorem-settings-components']));
+            $this->enqueue_file('assets/js/lorem-settings.js', array('handle'=>'lorem-settings', 'footer'=>true, 'deps' => ['vuejs','lorem-tween', 'vue-resource', 'lorem-settings-components']));
 
             $this->enqueue_file('assets/css/eb_lorem_style.css', array('handle'=>'lorem-settings-style'));
 

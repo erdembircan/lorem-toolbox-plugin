@@ -50,7 +50,7 @@ new Vue({
   },
   watch: {
     post_count(newVal) {
-      TweenLite.to(this.$data, 1, { tweenedNumber: newVal });
+      loremTween.to(1000, this.$data, { tweenedNumber: newVal });
     },
   },
 }).$mount('#lorem_app');
