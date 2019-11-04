@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Lorem Toolbox Plugin
- * Plugin URI: https://erdembircan.github.io/lorem-wordpress-plugin/
+ * Plugin URI: https://erdembircan.github.io/lorem-toolbox-plugin/
  * Author: Erdem Bircan
  * Author URI: https://erdembircan.github.io
  * Description: Plugin for auto content generation for development and testing purposes.
