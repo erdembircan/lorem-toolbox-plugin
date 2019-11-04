@@ -35,7 +35,7 @@
   - ~~[ ] bundle js with build tools~~
 - [x] localization
   - [x] may entirely give up whole localisation thing
-  - [ ] checkout new localization methods for WordPress
+  - [x] checkout new localization methods for WordPress
 - ~~[ ] admin dashboard info~~
   - number of posts generated
 - [x] meta box for shortcode attributes display
@@ -47,18 +47,16 @@
   - function for getting path and generating version for files
 - [x] zip testing
 - [x] check suitable names
-- [ ] readme
+- [x] readme
   - [readme validator](https://wordpress.org/plugins/developers/readme-validator/)
   - [readme generator](https://generatewp.com/plugin-readme/)
   - [x] checkout correct versions for readme plugin fields
-- [ ] write an alternative for TweenLite functionality
+- [x] write an alternative for TweenLite functionality
   - as it turns out, TweenLite's licence is not compatible with GPLv2 so I can't use it for a dependency for an official WordPress plugin.
-- [ ] homepage for plugin
-- [ ] banner image
-- [ ] submission
+- [x] homepage for plugin
+- [x] submission
   - [x] so far decided on the name `Lorem Toolbox`
     - ~~[ ] change the folder name to match decided name~~
       - for development purposes i decided to not to change the folder name since it won't affect the plugin
   - [general submission guidelines](https://wordpress.org/plugins/developers/#readme)
-
-> firefox send [link](https://send.firefox.com/download/a5d788b7795dbfd5/#gF1f2T-G_np_98-M47bCBA)
+- [ ] banner image
