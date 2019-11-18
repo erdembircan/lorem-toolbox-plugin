@@ -7,7 +7,7 @@
  * Description: Plugin for auto content generation for development and testing purposes.
  * Requires at least: 5.1
  * Requires PHP: 7.2
- * Version: 1.0.0
+ * Version: 1.0.1
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */

@@ -1,7 +1,7 @@
 {
   "name": "lorem-wordpress-plugin",
-  "version": "1.0.0",
-  "description": "various development/production tools for lorem-wordpress-plugin",
+  "version": "1.0.1",
+  "description": "various development/production tools for lorem-toolbox",
   "main": "index.js",
   "repository": "git@github.com:erdembircan/lorem-wordpress-plugin.git",
   "author": "Erdem Bircan <erdem.erdembircan@gmail.com>",
