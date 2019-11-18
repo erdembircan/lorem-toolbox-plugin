@@ -262,12 +262,15 @@ class LoremClass
      */
     private function _insert_new_post($count)
     {
+    	$current_date = new \DateTime();
+    	$current_date->modify("-$count seconds");
         for ($c=0; $c<$count; $c++) {
             $post_args = array(
             'post_title' => implode('', $this->_generate_lorem(1, 5, 9)),
             'post_status' => 'publish',
             'post_content' => '[lorem]',
-            'meta_input' => [$this->_getArg('meta_key') => 'true']
+            'post_date' => $current_date->modify('+'.(c+1).' seconds')->format('Y-m-d H:i:s'),
+            'meta_input' => [$this->_getArg('meta_key') => 'true'],
             );
             if (!wp_insert_post($post_args)) {
                 return false;
